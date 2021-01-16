@@ -39,7 +39,7 @@ module.exports = options => {
 
 	function aggregate(file, encoding, done) {
 		if (file.isStream()) {
-			done(new PluginError('gulp-mocha', 'Streaming not supported'));
+			done(new PluginError('gulp-ts^mocha', 'Streaming not supported'));
 			return;
 		}
 
@@ -50,7 +50,7 @@ module.exports = options => {
 
 	function flush(done) {
 		(async () => {
-			const subprocess = execa('mocha', files.concat(args), {
+			const subprocess = execa('ts-mocha', files.concat(args), {
 				localDir: __dirname,
 				preferLocal: true
 			});
@@ -64,7 +64,7 @@ module.exports = options => {
 				const result = await subprocess;
 				this.emit('_result', result);
 			} catch (error) {
-				this.emit('error', new PluginError('gulp-mocha', error.exitCode > 0 ? 'There were test failures' : error));
+				this.emit('error', new PluginError('gulp-ts-mocha', error.exitCode > 0 ? 'There were test failures' : error));
 			}
 
 			done();
