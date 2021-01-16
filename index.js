@@ -12,6 +12,8 @@ const MULTIPLE_OPTS = new Set([
 ]);
 
 module.exports = options => {
+	const project = options.project
+	delete options.project
 	options = {
 		colors: Boolean(supportsColor.stdout),
 		suppress: false,
@@ -34,6 +36,9 @@ module.exports = options => {
 		excludes: ['suppress'],
 		ignoreFalse: true
 	});
+	
+	args.push('-p')
+	args.push(project)
 
 	const files = [];
 
